@@ -1,0 +1,16 @@
+version: "1"
+
+services:
+  app:
+    image: '${DOCKER_IMAGE_NAME:-restaurant-payment-gateway-ms}:${DOCKER_IMAGE_TAG:-latest}'
+    tty: true
+    container_name: restaurant-payment-gateway
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: bash -c "uvicorn main:app --host 0.0.0.0 --port 8001 --log-level info --reload"
+    volumes:
+      - .:/code
+    ports:
+      - 8001:8001
+    restart: always
